@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import Confirm_App from './Confirm_App'
 let positionArr = ['left', 'center', 'right'];
-export function Confirm({ title, content, confirmBtnText, cancelBtnText, titleAlign, keyboardEsc, contentAlign, btnAlign, btnStyleColor, isShowClosable,isVisibleBtnAll, isVisibleCancelBtn, contentHeight, contentWidth, maskClosable, mackOpacity, modalPosition }) {
+export function Modal({ title, content, confirmBtnText, cancelBtnText, titleAlign, keyboardEsc, contentAlign, btnAlign, btnStyleColor, isShowClosable,isVisibleBtnAll, isVisibleCancelBtn, contentHeight, contentWidth, maskClosable, mackOpacity, modalPosition }) {
   return new Promise((resolve, reject) => {
     const confirmInstance = createApp(Confirm_App, {
       title,

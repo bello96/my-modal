@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { Confirm } from "./components/index";
+import { Modal } from "./components/index";
 
 let content = `
   <h2>且把浓情化作诗两行</h2>
@@ -17,9 +17,9 @@ export default {
   name: "App",
   setup() {
     const showConfirm = () => {
-      Confirm({
+      Modal({
         title: "温馨提示",
-        content: content,
+        content: "<h2>hello word</h2>",
         confirmBtnText: "确定",
         cancelBtnText: "取消",
         titleAlign: "left",
@@ -31,8 +31,8 @@ export default {
         isVisibleCancelBtn: true,
         isShowClosable: true,
         maskClosable: true,
-        contentHeight: "300",
-        contentWidth: 500,
+        contentHeight: "100",
+        contentWidth: 400,
         mackOpacity: "0.6",
         modalPosition: "center-center",
       })

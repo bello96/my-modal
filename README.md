@@ -1,3 +1,41 @@
+### 使用说明
+
+- **下载**：npm install vue-custom-modal
+- **引入**：import { Modal } from "vue-custom-modal";
+
+```javascript
+setup() {
+    const showConfirm = () => {
+      Modal({
+        title: "温馨提示",
+        content: "<h2>hello word</h2>",
+        confirmBtnText: "确定",
+        cancelBtnText: "取消",
+        titleAlign: "left",
+        contentAlign: "center",
+        btnAlign: "right",
+        keyboardEsc: true,
+        btnStyleColor: "#282C34",
+        isVisibleBtnAll: true,
+        isVisibleCancelBtn: true,
+        isShowClosable: true,
+        maskClosable: true,
+        contentHeight: "300",
+        contentWidth: 500,
+        mackOpacity: "0.6",
+        modalPosition: "center-center
+      }).then(() => {
+          console.log("确认的回调~");
+        }).catch(() => {
+          console.log("取消的回调~");
+        })
+    }
+    return {
+      showConfirm
+    }
+  }
+```
+
 ### 参数说明
 
 - **title**：标题名 | 默认：温馨提示
