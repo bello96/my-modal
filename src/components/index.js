@@ -1,18 +1,26 @@
 import { createApp } from 'vue'
-import Confirm from './Confirm'
-function confirm ({ title, content, confirmBtnText, cancelBtnText ,titleAlign,contentAlign,btnAlign,contentHeight,contentWidth}) {
+import Confirm_App from './Confirm_App'
+let positionArr = ['left', 'center', 'right'];
+export function Confirm({ title, content, confirmBtnText, cancelBtnText, titleAlign, keyboardEsc, contentAlign, btnAlign, btnStyleColor, isShowClosable,isVisibleBtnAll, isVisibleCancelBtn, contentHeight, contentWidth, maskClosable, mackOpacity, modalPosition }) {
   return new Promise((resolve, reject) => {
-    // 实例化组件，createApp第二个参数是props
-    const confirmInstance = createApp(Confirm, {
-      title: title || '温馨提示',
-      content: content || '',
+    const confirmInstance = createApp(Confirm_App, {
+      title,
+      content,
       confirmBtnText: confirmBtnText || '确定',
       cancelBtnText: cancelBtnText || '取消',
-      titleAlign: titleAlign || 'left',
-      contentAlign: contentAlign || 'left',
-      btnAlign: btnAlign || 'right',
-      contentHeight:contentHeight,
-      contentWidth:contentWidth,
+      titleAlign: positionArr.includes(titleAlign) ? titleAlign : 'left',
+      contentAlign: positionArr.includes(contentAlign) ? contentAlign : 'left',
+      btnAlign: positionArr.includes(btnAlign) ? btnAlign : 'right',
+      isVisibleBtnAll,
+      isVisibleCancelBtn,
+      isShowClosable,
+      btnStyleColor: btnStyleColor ? btnStyleColor : '#2dc480',
+      contentHeight,
+      contentWidth,
+      keyboardEsc,
+      maskClosable,
+      mackOpacity: mackOpacity ? mackOpacity : '0.4',
+      modalPosition,
       onConfirm: () => {
         unmount()
         resolve()
@@ -22,17 +30,12 @@ function confirm ({ title, content, confirmBtnText, cancelBtnText ,titleAlign,co
         reject(new Error())
       }
     })
-    // 卸载组件
     const unmount = () => {
       confirmInstance.unmount()
       document.body.removeChild(parentNode)
     }
-    // 创建一个挂载容器
     const parentNode = document.createElement('div')
     document.body.appendChild(parentNode)
-    // 挂载组件
     confirmInstance.mount(parentNode)
   })
 }
-
-export default confirm
