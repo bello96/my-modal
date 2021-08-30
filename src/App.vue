@@ -3,39 +3,41 @@
 </template>
 
 <script>
-import { Modal } from "./components/index";
+import Antd from "ant-design-vue";
+import ElementPlus from "element-plus";
 
-let content = `
-  <h2>且把浓情化作诗两行</h2>
-  <h2>且把浓情化作诗两行</h2>
-  <h2>且把浓情化作诗两行</h2>
-  <h2>且把浓情化作诗两行</h2>
+// import { Modal } from "./model/index";
+import { Modal } from "vue-custom-modal";
 
-`;
+import HelloWord from "./view/HelloWord.vue";
 
 export default {
   name: "App",
   setup() {
     const showConfirm = () => {
-      Modal({
-        title: "温馨提示",
-        content: "<h2>hello word</h2>",
-        confirmBtnText: "确定",
-        cancelBtnText: "取消",
-        titleAlign: "left",
-        contentAlign: "center",
-        btnAlign: "right",
-        keyboardEsc: true,
-        btnStyleColor: "#282C34",
-        isVisibleBtnAll: true,
-        isVisibleCancelBtn: true,
-        isShowClosable: true,
-        maskClosable: true,
-        contentHeight: "100",
-        contentWidth: 400,
-        mackOpacity: "0.6",
-        modalPosition: "center-center",
-      })
+      Modal(
+        {
+          title: "这是标题名字",
+          content: HelloWord,
+          confirmBtnText: "确定按钮",
+          cancelBtnText: "取消按钮",
+          titleAlign: "left",
+          contentAlign: "center",
+          btnAlign: "right",
+          keyboardEsc: true,
+          btnStyleColor: "#123",
+          isVisibleBtnAll: true,
+          isVisibleCancelBtn: true,
+          isShowClosable: true,
+          maskClosable: true,
+          contentHeight: "1200",
+          contentWidth: 9100,
+          mackOpacity: "0.2",
+          modalPosition: "center-center",
+          backgroundImage: require("./images/beijing.jpeg"),
+        },
+        [Antd, ElementPlus]
+      )
         .then(() => {
           console.log("确认回调~");
         })
@@ -53,10 +55,27 @@ export default {
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+#app ::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 0px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 8px;
+}
+
+#app ::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: #e4e6e5;
+}
+#app ::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background-color: transparent;
 }
 </style>

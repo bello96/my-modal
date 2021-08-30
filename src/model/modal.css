@@ -1,0 +1,105 @@
+.confirm_wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2001;
+  display: flex;
+  padding: 50px;
+}
+.confirm_box {
+  display: inline-block;
+  min-width: 300px;
+  max-width: 60%;
+  vertical-align: middle;
+  border-radius: 4px;
+  font-size: 18px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  text-align: left;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+.confirm_box_header {
+  position: relative;
+}
+.confirm_box_title {
+  padding-left: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: bold;
+  padding-right: 28px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.confirm_box_headerbtn {
+  position: absolute;
+  top: 11px;
+  right: 14px;
+  padding: 0;
+  border: none;
+  outline: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  text-align: center;
+  line-height: 18px;
+}
+.confirm_box_headerbtn:hover {
+  background-color: #eee;
+}
+.confirm_box_content {
+  padding: 10px 15px;
+  font-size: 14px;
+  overflow: auto;
+  max-height: 70vh;
+  min-height: 50px;
+}
+.confirm_box_btns {
+  padding: 10px 18px;
+}
+.confirm_box_btns button {
+  line-height: 1.5715;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  background-image: none;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 0 rgba(119, 84, 84, 0.02);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  user-select: none;
+  touch-action: manipulation;
+  height: 30px;
+  padding: 4px 12px;
+  font-size: 14px;
+  border-radius: 3px;
+  color: rgba(0, 0, 0, 0.85);
+  background: #fff;
+  border-color: #d9d9d9;
+  max-width: 46%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.confirm_box_btns .btn_confirm {
+  color: #fff;
+  border: none;
+}
+.confirm_box_btns button:nth-child(2) {
+  margin-left: 14px;
+}
+.transparent_frame {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 2000;
+}
