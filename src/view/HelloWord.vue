@@ -1,7 +1,14 @@
 <template>
+  <h1>vuex</h1>
+  <button @click="increment">count +5</button>
+  &nbsp;
+  <span>count: {{ count }}</span>
+  <br />
+  <hr />
   <h2>ant-design-vue</h2>
   <a-table :dataSource="dataSource" :columns="columns" :pagination="false" />
   <br />
+  <hr />
   <h2>element-plus</h2>
   <el-table :data="tableData">
     <el-table-column prop="date" label="日期" width="220"> </el-table-column>
@@ -10,8 +17,12 @@
   </el-table>
 </template>
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
 export default {
   setup() {
+    const store = useStore();
+    const increment = () => store.commit("increment", { amount: 5 });
     return {
       dataSource: [
         {
@@ -31,12 +42,6 @@ export default {
           name: "王俊凯",
           age: 22,
           address: "四川省成都市幸福大街99弄",
-        },
-        {
-          key: "4",
-          name: "陈小春",
-          age: 32,
-          address: "留心路888号新界家园",
         },
       ],
       columns: [
@@ -58,26 +63,23 @@ export default {
       ],
       tableData: [
         {
-          date: "2016-05-02",
+          date: "2021-05-02",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1518 弄",
         },
         {
           date: "2016-05-04",
-          name: "王小虎",
+          name: "王大虎",
           address: "上海市普陀区金沙江路 1517 弄",
         },
         {
-          date: "2016-05-01",
-          name: "王小虎",
+          date: "2019-01-01",
+          name: "刘二麻子",
           address: "上海市普陀区金沙江路 1519 弄",
         },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
       ],
+      count: computed(() => store.state.count),
+      increment,
     };
   },
 };

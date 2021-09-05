@@ -1,42 +1,49 @@
 <template>
   <button @click="showConfirm">弹出框</button>
+  &nbsp;&nbsp;&nbsp;
+  <button @click="increment">count +5</button>
+  &nbsp;
+  <span>count: {{ count }}</span>
 </template>
 
 <script>
 import Antd from "ant-design-vue";
 import ElementPlus from "element-plus";
+import Store from "./store";
+import { computed } from "vue";
+import { useStore } from "vuex";
 
-// import { Modal } from "./model/index";
-import { Modal } from "vue-custom-modal";
-
+import { Modal } from "./model/index";
+// import { Modal } from "vue-custom-modal";
 import HelloWord from "./view/HelloWord.vue";
 
 export default {
   name: "App",
   setup() {
+    const store = useStore();
     const showConfirm = () => {
       Modal(
         {
-          title: "这是标题名字",
+          title: "标题",
           content: HelloWord,
-          confirmBtnText: "确定按钮",
-          cancelBtnText: "取消按钮",
+          confirmBtnText: "确定",
+          cancelBtnText: "取消",
           titleAlign: "left",
           contentAlign: "center",
           btnAlign: "right",
           keyboardEsc: true,
-          btnStyleColor: "#123",
+          btnStyleColor: "#282C34",
           isVisibleBtnAll: true,
           isVisibleCancelBtn: true,
           isShowClosable: true,
           maskClosable: true,
-          contentHeight: "1200",
-          contentWidth: 9100,
+          contentHeight: "600",
+          contentWidth: 900,
           mackOpacity: "0.2",
           modalPosition: "center-center",
           backgroundImage: require("./images/beijing.jpeg"),
         },
-        [Antd, ElementPlus]
+        [Antd, ElementPlus, Store]
       )
         .then(() => {
           console.log("确认回调~");
@@ -45,8 +52,11 @@ export default {
           console.log("取消回调~");
         });
     };
+    const increment = () => store.commit("increment", { amount: 5 });
     return {
       showConfirm,
+      increment,
+      count: computed(() => store.state.count),
     };
   },
 };

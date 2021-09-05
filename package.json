@@ -7,10 +7,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "ant-design-vue": "^2.2.6",
     "core-js": "^3.6.5",
-    "element-plus": "^1.1.0-beta.4",
     "vue": "^3.2.4",
+    "vuex": "^4.0.2",
+    "ant-design-vue": "^2.2.6",
+    "element-plus": "^1.1.0-beta.4",
     "vue-custom-modal": "^1.0.3"
   },
   "devDependencies": {
