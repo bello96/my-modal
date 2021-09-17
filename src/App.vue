@@ -13,8 +13,8 @@ import Store from "./store";
 import { computed } from "vue";
 import { useStore } from "vuex";
 
-import { Modal } from "./model/index";
-// import { Modal } from "vue-custom-modal";
+// import { Modal } from "./model/index";
+import { Modal } from "vue-custom-modal";
 import HelloWord from "./view/HelloWord.vue";
 
 export default {
@@ -24,38 +24,53 @@ export default {
     const showConfirm = () => {
       Modal(
         {
-          title: "标题",
+          title: "标题名称",
+          titleStyle: {
+            textAlign: "center",
+            color: "#D44B3E",
+            fontSize: "24px",
+          },
+
           content: HelloWord,
-          confirmBtnText: "确定",
-          cancelBtnText: "取消",
-          titleAlign: "left",
-          contentAlign: "center",
-          btnAlign: "right",
-          keyboardEsc: true,
-          btnStyleColor: "#282C34",
-          isVisibleBtnAll: true,
-          isVisibleCancelBtn: true,
+          contentStyle: {
+            width: 900,
+            height: "800px",
+            textAlign: "left",
+          },
+
+          okText: "确定按钮",
+          cancelText: "取消按钮",
+          btnStyle: {
+            textAlign: "center",
+            color: "#1A73E8",
+          },
+
+          isShowBtnAll: true,
+          isShowCancelBtn: true,
           isShowClosable: true,
+          isDraggable: true,
+          keyboardEsc: true,
           maskClosable: true,
-          contentHeight: "600",
-          contentWidth: 900,
-          mackOpacity: "0.2",
-          modalPosition: "center-center",
-          backgroundImage: require("./images/beijing.jpeg"),
+          mackOpacity: "0.3",
+          position: "center-top",
+          background: require("./images/beijing.jpeg"),
         },
         [Antd, ElementPlus, Store]
       )
-        .then(() => {
+        .then((e) => {
           console.log("确认回调~");
+          if (true) {
+            // 满足条件 关闭弹框
+            e.unmount();
+          }
         })
         .catch(() => {
           console.log("取消回调~");
         });
     };
-    const increment = () => store.commit("increment", { amount: 5 });
     return {
       showConfirm,
-      increment,
+      increment: () => store.commit("increment", { amount: 5 }),
       count: computed(() => store.state.count),
     };
   },
@@ -68,24 +83,21 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-#app ::-webkit-scrollbar {
-  /*滚动条整体样式*/
-  width: 0px; /*高宽分别对应横竖滚动条的尺寸*/
+/* #app ::-webkit-scrollbar {
+  width: 1px;
   height: 8px;
 }
 
 #app ::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: #e4e6e5;
 }
 #app ::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background-color: transparent;
-}
+} */
 </style>

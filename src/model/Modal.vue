@@ -6,21 +6,32 @@
   >
     <div
       class="confirm_box"
+      ref="draggable_confirm_dom"
       :style="{
-        width: `${!isNaN(contentWidth) ? contentWidth : 'auto'}px`,
         background: isBackgroundColorValue
-          ? backgroundImage
-          : `#fff url(${backgroundImage})`,
+          ? background
+          : `#fff url(${background})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
+        width: `${
+          !isNaN(contentStyle.width)
+            ? contentStyle.width
+            : !isNaN(contentStyle.width.split('px')[0])
+            ? contentStyle.width.split('px')[0]
+            : 'auto'
+        }px`,
       }"
     >
       <div
         class="confirm_box_header"
-        :style="{ padding: title ? '12px 15px 8px' : 'none' }"
+        ref="draggable_header_dom"
+        :style="{
+          padding: title ? '12px 15px 8px' : 'none',
+          cursor: isDraggable ? 'move' : null,
+        }"
         v-if="title || isShowClosable"
       >
-        <div class="confirm_box_title" :style="{ textAlign: titleAlign }">
+        <div class="confirm_box_title" :style="titleStyle">
           <span :title="title.length > default_length ? title : ''">{{
             title
           }}</span>
@@ -45,39 +56,33 @@
           </svg>
         </button>
       </div>
-      <div
-        class="confirm_box_content"
-        :style="{
-          textAlign: contentAlign,
-          height: `${!isNaN(contentHeight) ? contentHeight : 'auto'}px`,
-        }"
-      >
+      <div class="confirm_box_content" :style="newContstyle">
         <component v-if="isVueOptionsValue" :is="content" />
         <div v-else v-html="content"></div>
       </div>
       <div
         class="confirm_box_btns"
         id="confirm_box_btns"
-        v-if="isVisibleBtnAll"
-        :style="{ textAlign: btnAlign }"
+        v-if="isShowBtnAll"
+        :style="btnStyle"
       >
         <button
           id="btn_cancel"
           class="btn_cancel"
-          v-if="isVisibleCancelBtn"
-          :title="cancelBtnText.length > default_length ? cancelBtnText : ''"
+          v-if="isShowCancelBtn"
+          :title="cancelText.length > default_length ? cancelText : ''"
           @click="onCancel"
         >
-          {{ cancelBtnText }}
+          {{ cancelText }}
         </button>
         <button
           id="btn_confirm"
           class="btn_confirm"
-          :title="confirmBtnText.length > default_length ? confirmBtnText : ''"
-          :style="{ backgroundColor: btnStyleColor }"
+          :title="okText.length > default_length ? okText : ''"
+          :style="{ backgroundColor: btnStyle.color }"
           @click="onConfirm"
         >
-          {{ confirmBtnText }}
+          {{ okText }}
         </button>
       </div>
     </div>
@@ -86,23 +91,23 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import {
   default_titleText,
-  default_confirmBtnText,
-  default_cancelBtnText,
+  default_okText,
+  default_cancelText,
   default_titleAlign,
-  default_contentAlign,
   default_btnAlign,
   default_mackOpacity,
-  default_modalPosition,
+  default_position,
   default_styleColor,
   default_length,
-  default_isVisibleBtnAll,
-  default_isVisibleCancelBtn,
+  default_isShowBtnAll,
+  default_isShowCancelBtn,
   default_isShowClosable,
   default_keyboardEsc,
   default_maskClosable,
+  default_isDraggable,
 } from "./default";
 import {
   mouseFn,
@@ -111,26 +116,25 @@ import {
   maskClosableFn,
   keyupEvent,
   getxyPosition,
+  startDrop,
 } from "./utils";
 export default {
   name: "Confirm_App",
   props: {
     title: {
-      type: String,
       default: default_titleText,
     },
     content: {
       default: "",
     },
-    confirmBtnText: {
-      type: String,
-      default: default_confirmBtnText,
+    okText: {
+      default: default_okText,
     },
-    isVisibleBtnAll: {
-      default: default_isVisibleBtnAll,
+    isShowBtnAll: {
+      default: default_isShowBtnAll,
     },
-    isVisibleCancelBtn: {
-      default: default_isVisibleCancelBtn,
+    isShowCancelBtn: {
+      default: default_isShowCancelBtn,
     },
     isShowClosable: {
       default: default_isShowClosable,
@@ -138,31 +142,13 @@ export default {
     keyboardEsc: {
       default: default_keyboardEsc,
     },
-    cancelBtnText: {
-      type: String,
-      default: default_cancelBtnText,
+    cancelText: {
+      default: default_cancelText,
     },
-    contentHeight: [Number, String],
-    contentWidth: [Number, String],
-    titleAlign: {
+    contentStyle: [Object],
+    position: {
       type: String,
-      default: default_titleAlign,
-    },
-    contentAlign: {
-      type: String,
-      default: default_contentAlign,
-    },
-    btnAlign: {
-      type: String,
-      default: default_btnAlign,
-    },
-    modalPosition: {
-      type: String,
-      default: default_modalPosition,
-    },
-    btnStyleColor: {
-      type: String,
-      default: default_styleColor,
+      default: default_position,
     },
     mackOpacity: {
       type: [Number, String],
@@ -180,14 +166,35 @@ export default {
       type: [String, Boolean, Number],
       default: default_maskClosable,
     },
-    backgroundImage: [String, Number],
+    background: [String, Number],
+    isDraggable: {
+      type: [String, Boolean, Number],
+      default: default_isDraggable,
+    },
+    titleStyle: {
+      type: Object,
+      default: {
+        textAlign: default_titleAlign,
+      },
+    },
+    btnStyle: {
+      type: Object,
+      default: {
+        textAlign: default_btnAlign,
+        color: default_styleColor,
+      },
+    },
   },
   setup(props) {
     onMounted(() => {
+      if (props.isDraggable) {
+        startDrop(draggable_header_dom.value, draggable_confirm_dom.value);
+        document.onmouseup = () => (document.onmousemove = null);
+      }
       if (props.keyboardEsc) {
         document.addEventListener("keyup", keyupEventFn);
       }
-      if (props.isVisibleBtnAll) {
+      if (props.isShowBtnAll) {
         document
           .getElementById("confirm_box_btns")
           .addEventListener("mouseover", (e) => mouseFn(e, props));
@@ -200,19 +207,43 @@ export default {
       if (props.keyboardEsc) {
         document.removeEventListener("keyup", keyupEventFn);
       }
+      if (props.isDraggable) {
+        document.onmouseup = null;
+      }
     });
+
     const keyupEventFn = (e) => keyupEvent(e, props);
-    const maskClosableNewFn = () => maskClosableFn(props);
-    const isBackgroundColorValue = isBackgroundColor(props);
-    const isVueOptionsValue = isVueOptions(props.content);
-    const { xPosition, yPosition } = getxyPosition(props);
+    let draggable_header_dom = ref(null),
+      draggable_confirm_dom = ref(null);
+
+    const setContentStyle = () => {
+      let contentStyle = props.contentStyle;
+      let newContentStyle = {};
+      for (let i in contentStyle) {
+        if (i != "width") {
+          newContentStyle[i] = contentStyle[i];
+        }
+      }
+      newContentStyle.height = `${
+        !isNaN(newContentStyle.height)
+          ? newContentStyle.height
+          : !isNaN(newContentStyle.height.split("px")[0])
+          ? newContentStyle.height.split("px")[0]
+          : "auto"
+      }px`;
+      return newContentStyle;
+    };
+
     return {
-      maskClosableNewFn,
-      isVueOptionsValue,
-      isBackgroundColorValue,
+      maskClosableNewFn: () => maskClosableFn(props),
+      isVueOptionsValue: isVueOptions(props.content),
+      isBackgroundColorValue: isBackgroundColor(props),
       default_length,
-      xPosition,
-      yPosition,
+      xPosition: getxyPosition(props).xPosition,
+      yPosition: getxyPosition(props).yPosition,
+      draggable_header_dom,
+      draggable_confirm_dom,
+      newContstyle: setContentStyle(),
     };
   },
 };

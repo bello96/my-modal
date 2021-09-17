@@ -19,6 +19,7 @@
   text-align: left;
   overflow: hidden;
   backface-visibility: hidden;
+  position: absolute;
 }
 .confirm_box_header {
   position: relative;
@@ -60,7 +61,7 @@
   min-height: 50px;
 }
 .confirm_box_btns {
-  padding: 10px 18px;
+  padding: 10px 15px;
 }
 .confirm_box_btns button {
   line-height: 1.5715;

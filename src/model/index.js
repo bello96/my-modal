@@ -6,8 +6,8 @@ import {
   default_btnAlign,
   default_contentAlign,
   default_styleColor,
-  default_confirmBtnText,
-  default_cancelBtnText,
+  default_okText,
+  default_cancelText,
   default_mackOpacity,
   default_positionArr
 } from './default'
@@ -41,29 +41,30 @@ function createParentNode() {
   return { rootNode, parentNode }
 }
 function createModal(resolve, reject, unmount, params) {
+  params.titleStyle = params.titleStyle ? params.titleStyle : {}
+  params.btnStyle = params.btnStyle ? params.btnStyle : { textAlign: default_btnAlign, color: default_styleColor }
+  if (!params.btnStyle.color) params.btnStyle.color = default_styleColor
+  params.contentStyle = params.contentStyle ? params.contentStyle : {}
+  if (!params.contentStyle.width) params.contentStyle.width = 'auto'
+  if (!params.contentStyle.height) params.contentStyle.height = 'auto'
   return createApp(Modal_App, {
     title: params.title,
     content: params.content,
-    confirmBtnText: params.confirmBtnText || default_confirmBtnText,
-    cancelBtnText: params.cancelBtnText || default_cancelBtnText,
-    titleAlign: default_positionArr.includes(params.titleAlign) ? params.titleAlign : default_titleAlign,
-    contentAlign: default_positionArr.includes(params.contentAlign) ? params.contentAlign : default_contentAlign,
-    btnAlign: default_positionArr.includes(params.btnAlign) ? params.btnAlign : default_btnAlign,
-    isVisibleBtnAll: params.isVisibleBtnAll,
-    isVisibleCancelBtn: params.isVisibleCancelBtn,
+    okText: params.okText || default_okText,
+    cancelText: params.cancelText || default_cancelText,
+    titleStyle: default_positionArr.includes(params.titleStyle.textAlign) ? params.titleStyle : { ...params.titleStyle, textAlign: default_titleAlign },
+    btnStyle: default_positionArr.includes(params.btnStyle.textAlign) ? params.btnStyle : { ...params.btnStyle, textAlign: default_btnAlign },
+    isShowBtnAll: params.isShowBtnAll,
+    isShowCancelBtn: params.isShowCancelBtn,
     isShowClosable: params.isShowClosable,
-    btnStyleColor: params.btnStyleColor ? params.btnStyleColor : default_styleColor,
-    contentHeight: params.contentHeight,
-    contentWidth: params.contentWidth,
+    contentStyle:default_positionArr.includes(params.contentStyle.textAlign) ? params.contentStyle : { ...params.contentStyle, textAlign: default_contentAlign },
     keyboardEsc: params.keyboardEsc,
     maskClosable: params.maskClosable,
     mackOpacity: params.mackOpacity ? params.mackOpacity : default_mackOpacity,
-    modalPosition: params.modalPosition,
-    backgroundImage: params.backgroundImage,
-    onConfirm: () => {
-      unmount()
-      resolve('ok')
-    },
+    position: params.position,
+    background: params.background,
+    isDraggable:params.isDraggable,
+    onConfirm: () => resolve({ unmount }),
     onCancel: () => {
       unmount()
       reject('cancel')
