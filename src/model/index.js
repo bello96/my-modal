@@ -44,6 +44,7 @@ function createModal(resolve, reject, unmount, params) {
   params.titleStyle = params.titleStyle ? params.titleStyle : {}
   params.btnStyle = params.btnStyle ? params.btnStyle : { textAlign: default_btnAlign, color: default_styleColor }
   if (!params.btnStyle.color) params.btnStyle.color = default_styleColor
+  if (!params.btnStyle.fontSize) params.btnStyle.fontSize = '12px'
   params.contentStyle = params.contentStyle ? params.contentStyle : {}
   if (!params.contentStyle.width) params.contentStyle.width = 'auto'
   if (!params.contentStyle.height) params.contentStyle.height = 'auto'
@@ -62,7 +63,7 @@ function createModal(resolve, reject, unmount, params) {
     maskClosable: params.maskClosable,
     mackOpacity: params.mackOpacity ? params.mackOpacity : default_mackOpacity,
     position: params.position,
-    background: params.background,
+    background: params.background || '#fff',
     isDraggable:params.isDraggable,
     onConfirm: () => resolve({ unmount }),
     onCancel: () => {

@@ -8,11 +8,7 @@
       class="confirm_box"
       ref="draggable_confirm_dom"
       :style="{
-        background: isBackgroundColorValue
-          ? background
-          : `#fff url(${background})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
+        ...setBackground(background),
         width: `${
           !isNaN(contentStyle.width)
             ? contentStyle.width
@@ -28,10 +24,11 @@
         :style="{
           padding: title ? '12px 15px 8px' : 'none',
           cursor: isDraggable ? 'move' : null,
+          ...setTitleBg(titleStyle),
         }"
         v-if="title || isShowClosable"
       >
-        <div class="confirm_box_title" :style="titleStyle">
+        <div class="confirm_box_title" :style="newTitlestyle">
           <span :title="title.length > default_length ? title : ''">{{
             title
           }}</span>
@@ -64,7 +61,7 @@
         class="confirm_box_btns"
         id="confirm_box_btns"
         v-if="isShowBtnAll"
-        :style="btnStyle"
+        :style="setFootBg()"
       >
         <button
           id="btn_cancel"
@@ -217,13 +214,7 @@ export default {
       draggable_confirm_dom = ref(null);
 
     const setContentStyle = () => {
-      let contentStyle = props.contentStyle;
-      let newContentStyle = {};
-      for (let i in contentStyle) {
-        if (i != "width") {
-          newContentStyle[i] = contentStyle[i];
-        }
-      }
+      let newContentStyle = redefineStyle(props.contentStyle, "width");
       newContentStyle.height = `${
         !isNaN(newContentStyle.height)
           ? newContentStyle.height
@@ -231,19 +222,72 @@ export default {
           ? newContentStyle.height.split("px")[0]
           : "auto"
       }px`;
-      return newContentStyle;
+      let bg = setBackground(newContentStyle["background"]);
+      return { ...newContentStyle, ...bg };
+    };
+
+    const setTitleStyle = (titleStyle) => {
+      let a = redefineStyle(titleStyle, "background");
+      let b = redefineStyle(a, "backgroundColor");
+      return b;
+    };
+
+    // 设置头部背景图
+    const setTitleBg = (titleStyle) => {
+      if (titleStyle && titleStyle["backgroundColor"])
+        return { backgroundColor: titleStyle["backgroundColor"] };
+      if (titleStyle && titleStyle["background"])
+        return setBackground(titleStyle["background"]);
+    };
+
+    // 设置底部背景
+    const setFootBg = () => {
+      let newstyle = props.btnStyle;
+      if (newstyle["backgroundColor"]) return newstyle;
+      if (newstyle["background"]) {
+        let newFootStyle = redefineStyle(newstyle, "background");
+        let bg = setBackground(newstyle["background"]);
+        return { ...newFootStyle, ...bg };
+      }
+      return newstyle;
+    };
+
+    // 重新定义css
+    const redefineStyle = (styleObj, param) => {
+      let _newStyle = styleObj;
+      let newStyle = {};
+      for (let i in _newStyle) {
+        if (i != param) {
+          newStyle[i] = _newStyle[i];
+        }
+      }
+      return newStyle;
+    };
+
+    // 设置背景颜色
+    const setBackground = (bg) => {
+      if (!bg) return {};
+      return {
+        background: isBackgroundColor(bg) ? bg : `#fff url(${bg})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      };
     };
 
     return {
       maskClosableNewFn: () => maskClosableFn(props),
       isVueOptionsValue: isVueOptions(props.content),
-      isBackgroundColorValue: isBackgroundColor(props),
       default_length,
       xPosition: getxyPosition(props).xPosition,
       yPosition: getxyPosition(props).yPosition,
       draggable_header_dom,
       draggable_confirm_dom,
       newContstyle: setContentStyle(),
+      newTitlestyle: setTitleStyle(props.titleStyle),
+      setBackground,
+      redefineStyle,
+      setTitleBg,
+      setFootBg,
     };
   },
 };

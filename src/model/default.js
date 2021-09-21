@@ -15,6 +15,7 @@ export const default_keyboardEsc = true // 是否可以通过esc键关闭弹框
 export const default_maskClosable = true // 是否可以通过点击蒙版关闭弹框
 export const default_isDraggable = false // 是否可以拖拽弹框
 export const default_positionArr = ['left', 'center', 'right']; // 标题 内容 按钮 对齐方式
+// 弹框位置集合
 export const default_positionAll = [
   "left-top",
   "center-top",
@@ -25,4 +26,52 @@ export const default_positionAll = [
   "left-bottom",
   "center-bottom",
   "right-bottom",
-]; // 弹框位置集合
+];
+// 英文颜色集合
+export const colors = [
+  'red',
+  'green',
+  'blue',
+  'magenta',
+  'yellow',
+  'chocolate',
+  'black',
+  'aquamarine',
+  'lime',
+  'fuchsia',
+  'brass',
+  'azure',
+  'brown',
+  'bronze',
+  'deeppink',
+  'aliceblue',
+  'gray',
+  'copper',
+  'coral',
+  'feldspar',
+  'orange',
+  'orchid',
+  'pink',
+  'plum',
+  'turquoise',
+  'violet',
+  'chartreuse',
+  'firebrick',
+  'gold',
+  'khaki',
+  'silver',
+  'tan',
+  'thistle',
+  'snow',
+  'lavender',
+  'lightblue',
+  'lavenderblush',
+  'lightcoral',
+  'lightcyan',
+  'lightgodenrod',
+  'hotpink',
+  'greenyellow',
+  'lemonchiffon',
+  'lawngreen',
+  'deepskyblue'
+]

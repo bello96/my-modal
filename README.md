@@ -9,16 +9,23 @@
 - **`title`**：标题名 | _默认：`温馨提示`_
 
 - **`titleStyle`**：标题风格 | **`object`**
+  - 背景可取字段 `background` 和 `backgroundColor`
+  - `background` 取值同下 `background`
 
 * **`content`**：提示信息
 
 * **`contentStyle`**：提示信息风格 | **`object`**
+  - 背景可取字段 `background` 和 `backgroundColor`
+  - `background` 取值同下 `background`
+
 
 - **`okText`**：确定按钮名称 | _默认：`确定`_
 
 - **`cancelText`**：取消按钮名称 | _默认：`取消`_
 
 - **`btnStyle`**：按钮风格 | **`object`**
+  - 背景可取字段 `background` 和 `backgroundColor`
+  - `background` 取值同下 `background`
 
 - **`isShowBtnAll`**：是否展示所有按钮（布尔） | _默认：`true`_
 
@@ -35,24 +42,24 @@
 - **`mackOpacity`**：蒙层透明度（0-1) | _默认：`0.6`_
 
 - **`position`**：弹框位置（若给定值不在此范围则默认 _居中展示_）
-  值 | 类型 | 释义
-  ---|--- | ---
-  left-top | string | 左上
-  center-top | string | 中上
-  right-top | string | 右上
-  left-center | string | 中左
-  center-center | string | 中中
-  right-center | string | 右中
-  left-bottom | string | 左下
-  center-bottom | string | 中下
-  right-bottom | string | 右下
+  | 值 | 类型 | 释义 |
+  | ---- | ---- | ---- |
+  | left-top | string | 左上 |
+  | center-top | string | 中上 |
+  | right-top | string | 右上 |
+  | left-center | string | 中左 |
+  | center-center | string | 中中 |
+  | right-center | string | 右中 |
+  | left-bottom | string | 左下 |
+  | center-bottom | string | 中下 |
+  | right-bottom | string | 右下 |
 
 - **`background`**：弹框背景 | _默认：白色_
-  类型 | 释义
-  ---|---
-  颜色 | **只接受 16 进制颜色** _（例：#398DEE）_
-  本地图片 | 通过 require() 方式引入
-  网络图片 | 在线 url 地址
+  | 类型 | 释义 |
+  | ----|---- |
+  | 颜色 | 颜色值（常用英文和16进制） |
+  | 本地图片 | 通过 require() 方式引入 |
+  | 网络图片 | 在线 url 地址 |
 
 ### 使用示例
 
@@ -82,6 +89,7 @@ setup() {
         btnStyle: {
           textAlign: "center",
           color: "#1A73E8",
+
         },
         isShowBtnAll: true,
         isShowCancelBtn: true,

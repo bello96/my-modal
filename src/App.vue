@@ -24,25 +24,30 @@ export default {
     const showConfirm = () => {
       Modal(
         {
-          title: "标题名称",
+          title: "最新通知消息",
           titleStyle: {
             textAlign: "center",
             color: "#D44B3E",
-            fontSize: "24px",
+            fontSize: "30px",
+            letterSpacing: "10px",
+            background: require("./images/title.png"),
           },
 
           content: HelloWord,
           contentStyle: {
-            width: 900,
+            width: 1500,
             height: "800px",
             textAlign: "left",
+            // background: require("./images/content.jpg"),
           },
 
-          okText: "确定按钮",
-          cancelText: "取消按钮",
+          okText: "成功",
+          cancelText: "失败",
           btnStyle: {
             textAlign: "center",
-            color: "#1A73E8",
+            color: "#61B883",
+            background: require("./images/bottom.png"),
+            fontSize: "20px",
           },
 
           isShowBtnAll: true,
@@ -52,7 +57,7 @@ export default {
           keyboardEsc: true,
           maskClosable: true,
           mackOpacity: "0.3",
-          position: "center-top",
+          position: "center-center",
           background: require("./images/beijing.jpeg"),
         },
         [Antd, ElementPlus, Store]
@@ -83,21 +88,4 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-/* #app ::-webkit-scrollbar {
-  width: 1px;
-  height: 8px;
-}
-
-#app ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background: #e4e6e5;
-}
-#app ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  background-color: transparent;
-} */
 </style>

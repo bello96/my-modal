@@ -1,4 +1,4 @@
-import { default_positionAll } from './default'
+import { default_positionAll,colors } from './default'
 export const mouseFn = (e, props) => {
   e.stopPropagation();
   let { target, type } = e;
@@ -22,8 +22,10 @@ export const mouseFn = (e, props) => {
     }
   }
 };
-export const isBackgroundColor = (props) =>
-  /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/.test(props.background);
+export const isBackgroundColor = (bg) => {
+  return colors.includes(bg) || /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/.test(bg);
+}
+  
 export const isVueOptions = (options) => {
   if (!options) return false;
   return (
